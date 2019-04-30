@@ -1,0 +1,28 @@
+<!--plugin/components/ui-calendar/ui-calendar.wxml-->
+<!--components/ui-calendar/ui-calendar.wxml-->
+<view class="ui-calendar">
+  <view class="ui-calendar-top">{{topDate}}</view>
+  
+  <view class="btn-prev" bindtap="tapSlide" data-type="prev"></view>
+  <swiper
+    class="ui-calendar-swiper"
+    current="{{current}}" 
+    current-item-id="" 
+    interval="5000" 
+    duration="500"
+    bindchange="changeDate"
+    bindanimationfinish="finishSwiper"
+  > 
+    <swiper-item wx:for="{{day}}" wx:key="{{item}}" class="ui-calendar-item" item-id="">        
+      <view class="week s-flex">
+        <view class="week-item flex-item" wx:for="{{week}}" wx:key="{{item}}">{{item}}</view>
+      </view>
+      <view class="day s-flex">
+        <view class="day-item flex-item" wx:for="{{item}}" wx:key="{{dayItem}}"  wx:for-item="dayItem" data-ddy="{{dayItem.ddy}}" bindtap="selectDay">
+          <text class="text {{dayItem.disabled ? 'disabled' : (dayItem.current ? 'current' : '')}}">{{dayItem.dd}}</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+  <view class="btn-next" bindtap="tapSlide" data-type="next"></view>
+</view>
