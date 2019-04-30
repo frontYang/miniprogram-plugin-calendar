@@ -1,6 +1,0 @@
-{
-  "publicComponents": {
-    "ui-calendar": "components/ui-calendar/ui-calendar"
-  },
-  "main": "index.js"
-}
