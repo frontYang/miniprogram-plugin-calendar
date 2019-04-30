@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "ui-calendar": "plugin://myPlugin/ui-calendar"
+  }
+}

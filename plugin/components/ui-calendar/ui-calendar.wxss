@@ -1,0 +1,64 @@
+/* plugin/components/ui-calendar/ui-calendar.wxss */
+.s-flex{
+  display: flex;
+}
+.s-flex .flex-item{
+  flex: 1;
+}
+.ui-calendar{
+  background: #fff;
+  font-size: 25rpx;
+  padding: 0 30rpx;
+  height: 164rpx;
+  position: relative;
+}
+.ui-calendar-top{
+  padding: 0 26rpx 10rpx;
+}
+.ui-calendar .week,
+.ui-calendar-item .day{
+  text-align: center;
+}
+.ui-calendar .week .week-item,
+.ui-calendar-item .day .day-item{
+  border-radius: 50%;
+}
+.ui-calendar .week{
+  color: #888;  
+}
+.day-item{
+  padding-top: 20rpx;
+}
+.day-item .text{
+  display: block;
+  margin: 0 auto;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 50%;  
+}
+.day-item .disabled{
+  color: gray;
+}
+.day-item .current{
+  color: #fff;  
+  background: #bbbbbb;
+}
+.btn-prev,
+.btn-next{   
+  width: 0;
+  height: 0;
+  border-width: 20rpx;
+  border-style: solid;
+  border-color: #ddd transparent transparent transparent;
+  position: absolute; 
+  top: 60%;  
+}
+.btn-prev{
+  left: 0;
+  transform: translateY(-50%) rotateZ(90deg);
+}
+.btn-next{
+  right: 0;
+  transform: translateY(-50%) rotateZ(-90deg);
+}
