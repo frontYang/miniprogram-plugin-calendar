@@ -1,9 +1,7 @@
 // plugin/components/ui-calendar/ui-calendar.js
 const { formatNumber, getMulArray } = require('./util.js')
 
-
-// 
-
+//
 Component({
   /**
    * 组件的属性列表
@@ -11,7 +9,7 @@ Component({
   properties: {
     date: {
       type: String,
-      value: '' 
+      value: ''
     }
   },
 
@@ -37,17 +35,16 @@ Component({
    */
   methods: {
     /* 初始化日历 */
-    init(date, callback) {
+    init(date, callback){
       let dateAll = this.initDate(date)
       let day = getMulArray(dateAll)
       let current = this.data.current
-      console.log('当前滑块', current)
-      console.log(dateAll)
-      console.log(`当天日期：`, this.data.curDay)
+      app.log('当前滑块',current)
+      app.log(dateAll)
+      app.log(`当天日期：`, this.data.curDay)
 
       this.setData({
-        day,
-        ddy: this.data.curDay.ddy
+        day
       })
 
       let curDay = this.data.curDay
@@ -55,7 +52,7 @@ Component({
       let mm = curDay.date.split('/')[1]
       let topDate = `${yy}年${mm}月`
       let index = this.getWeekDay(curDay.ddy)
-      console.log(index)
+      app.log(index)
 
       this.setData({
         topDate,
@@ -65,13 +62,15 @@ Component({
       // console.log('当前日期', curDay)
     },
 
+
     /* 上一周,下一周点击切换 */
-    tapSlide(e) {
+    tapSlide(e){
       let type = e.target.dataset.type
       let current = type == 'prev' ? this.data.current - 1 : this.data.current + 1
-      if (current <= 0 || current >= this.data.day.length) return
+      if(current <= 0 || current >= this.data.day.length) return
       this.setData({ current })
     },
+
 
     /**
      * 获取一周中的第几天
@@ -80,7 +79,7 @@ Component({
       return ddy == 0 ? 6 : ddy - 1
     },
 
-    changeDate(e) {
+    changeDate(e){
       let { current } = e.detail
       this.setData({
         current: current
@@ -88,9 +87,9 @@ Component({
       this.initTopDate()
     },
 
-    initTopDate() {
+
+    initTopDate(){
       let curDay = this.data.day[this.data.current][this.getWeekDay(this.data.ddy)]
-      console.log(this.data.day, this.data.current, this.data.ddy)
       let yy = curDay.date.split('/')[0]
       let mm = curDay.date.split('/')[1]
       let topDate = `${yy}年${mm}月`
@@ -99,6 +98,7 @@ Component({
         topDate
       })
     },
+
 
     // 滑块滑完触发
     finishSwiper(e) {
@@ -109,7 +109,7 @@ Component({
     },
 
     // 高亮当前日期
-    setCurDdy(day, ddy, current) {
+    setCurDdy(day, ddy, current){
       let index = this.getWeekDay(ddy)
       day.forEach((ele) => {
         ele.forEach(eleInner => {
@@ -121,8 +121,9 @@ Component({
       return day
     },
 
+
     // 选择天数
-    selectDay(e) {
+    selectDay(e){
       let { day, current } = this.data
       let { ddy } = e.currentTarget.dataset
       let index = this.getWeekDay(ddy)
@@ -138,9 +139,9 @@ Component({
         topDate
       })
 
-      console.log(`当前滑块`, current)
-      console.log(`当前索引`, index)
-      console.log('当前选择日期', curDay)
+      app.log(`当前滑块`, current)
+      app.log(`当前索引`, index)
+      app.log('当前选择日期', curDay)
 
       var target = {
         curDay: curDay,
@@ -150,22 +151,24 @@ Component({
       this.triggerEvent('SelectEvent', target)
     },
 
+
     // 初始化日期
-    initDate(date) {
+    // 初始化日期
+    initDate(date){
       let start = new Date(this.getDate(8, 'W', date || ''))
       let end = new Date(this.getDate(-8, 'W', date || ''))
       let dateAll = this.getDay(start, end, date)
 
       // 补前空缺
-      if (dateAll[0].ddy != 1) {
+      if(dateAll[0].ddy != 1){
         let s = dateAll[0].ddy == 0 ? 6 : dateAll[0].ddy
         let a = 0
-        for (let i = s; i > 0; i--) {
-          a++
+        for(let i = s; i > 0; i--){
+          a ++
           let newDate = this.getDate(-a, 'D', dateAll[a - 1].date)
           let newDd = formatNumber(new Date(newDate).getDate())
           let newDdy = new Date(newDate).getDay()
-          if (newDdy != 0) {
+          if(newDdy != 0){
             dateAll.unshift({
               date: newDate,
               dd: newDd,
@@ -178,12 +181,12 @@ Component({
       }
 
       // 补后空缺
-      if (dateAll[dateAll.length - 1].ddy != 0) {
+      if(dateAll[dateAll.length - 1].ddy != 0){
         let s = dateAll[dateAll.length - 1].ddy == 0 ? 6 : 7 - dateAll[dateAll.length - 1].ddy
         let a = 0
         let arr = []
-        for (let i = 0; i < s; i++) {
-          a++
+        for(let i = 0; i < s; i++){
+          a ++
           let newDate = this.getDate(a, 'D', dateAll[dateAll.length - a].date)
           let newDd = formatNumber(new Date(newDate).getDate())
           let newDdy = new Date(newDate).getDay()
@@ -201,10 +204,11 @@ Component({
       return dateAll
     },
 
+
     /**
      * 获取时间
      */
-    getTime(date) {
+    getTime(date){
       let now = date ? new Date(date) : new Date()
       let yy = now.getFullYear()
       let mm = formatNumber(now.getMonth() + 1)
@@ -213,12 +217,13 @@ Component({
       return datestr
     },
 
+
     /* 获取区间内的天数 */
-    getDay(start, end, today) {
+    getDay(start, end, today){
       let dayAll = []
       let i = 0
       let now = this.getTime(today)
-      while ((end.getTime() - start.getTime()) >= 0) {
+      while((end.getTime() - start.getTime()) >= 0){
         let dd = formatNumber(start.getDate())
         let date = this.getTime(start)
         let ddy = start.getDay()
@@ -233,7 +238,7 @@ Component({
         }
 
 
-        if (now == this.getTime(date)) {
+        if(now == this.getTime(date)){
           let currentDate = new Date(today)
           let ddy2 = currentDate.getDay()
 
@@ -264,8 +269,9 @@ Component({
       return dayAll
     },
 
+
     /**
-     * 补0 
+     * 补0
      */
     formatNumber(value) {
       return (value < 10 ? '0' : '') + value;
@@ -277,7 +283,7 @@ Component({
      * @param {String} timeUnit 类别
      * @param {String} curDate 指定时间
      */
-    getDate(n, timeUnit, curDate) {
+    getDate(n, timeUnit, curDate){
       let datastr
       curDate = curDate ? new Date(curDate) : new Date()
 
@@ -290,7 +296,7 @@ Component({
       } else if (timeUnit === 'Y') {
         // 年
         curDate.setFullYear(curDate.getFullYear() + n)
-      } else if (timeUnit === 'W') {
+      }else if (timeUnit === 'W'){
         var oneweekdate = new Date(curDate - n * 7 * 24 * 3600 * 1000)
         datastr = this.getTime(oneweekdate)
         return datastr
@@ -298,5 +304,6 @@ Component({
       datastr = this.getTime(curDate)
       return datastr
     },
+
   }
 })
